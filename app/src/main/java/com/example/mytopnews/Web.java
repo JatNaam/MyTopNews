@@ -1,0 +1,63 @@
+package com.example.mytopnews;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+public class Web extends AppCompatActivity {
+
+    @SuppressLint("SetJavaScriptEnabled")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_web);
+        //隐藏自带的菜单栏
+//        ActionBar actionbar = getSupportActionBar();
+//        if (actionbar != null) {
+//            actionbar.hide();
+//        }
+
+        WebView webView = (WebView) findViewById(R.id.webView);
+        
+        //解决页面空白问题
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);//是否允许JavaScript脚本运行，默认为false。设置true时，会提醒可能造成XSS漏洞
+        webSettings.setDomStorageEnabled(true);//开启本地DOM存储
+        webSettings.setAppCacheEnabled(false);//可以通过setAppCacheEnabled方法来控制webView是否有缓存：
+
+        webSettings.setSupportZoom(true);//是否可以缩放，默认true
+        webSettings.setBuiltInZoomControls(true);//是否显示缩放按钮，默认false
+        webSettings.setUseWideViewPort(true);//设置此属性，可任意比例缩放。大视图模式
+        webSettings.setLoadWithOverviewMode(true);//和setUseWideViewPort(true)一起解决网页自适应问题
+
+        webView.setWebViewClient(new WebViewClient() {//使一切操作如登录操作，都在WebView中进行，不打开浏览器
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.startsWith("http://") || url.startsWith("https://")) {
+                    view.loadUrl(url);
+                    return false;
+                } else {//如果不是http开头的地址，就是走这里。
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        Web.this.startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return true;
+                }
+            }
+        });
+
+        Intent intent = getIntent();
+        String data = intent.getStringExtra("extra_data");
+        if (data != null)
+            webView.loadUrl(data);
+    }
+}
