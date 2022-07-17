@@ -11,7 +11,7 @@ import android.webkit.WebViewClient;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class Web extends AppCompatActivity {
+public class WebActivity extends AppCompatActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -46,7 +46,7 @@ public class Web extends AppCompatActivity {
                 } else {//如果不是http开头的地址，就是走这里。
                     try {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                        Web.this.startActivity(intent);
+                        WebActivity.this.startActivity(intent);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

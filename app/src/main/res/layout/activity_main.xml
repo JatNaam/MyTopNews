@@ -1,29 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
+    <!--加入滑动菜单的功能
+    第一个子控件是主屏幕的内容
+    第二个子控件是滑动菜单的内容，这里使用了material库的NavigationView来展示个人信息，
+    其实可以是任意布局，例如SunnyWeather项目就使用了Fragment-->
 
-
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <com.example.mytopnews.titilelayout.TitleLayout
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#17d9ff"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            <!--android:theme设置toolbar主题
+                app:popupTheme设置toolbar中的菜单项的主题
+                app命名空间：为了兼容低版本的系统
+                layout_scrollFlags：scroll表示当RecycleView向上滑动时，Toolbar会跟着一起向上滚动并实现隐藏
+                                    enterAlways表示当向下滚动时Toolbar会跟着向下滚动并重新显示
+                                    snap表示当Toolbar还没完全隐藏或显示时会根据当前滚动距离自动选择隐藏或显示-->
+        </com.google.android.material.appbar.AppBarLayout>
+        <!--AppBarLayout实际上是一个垂直方向的LinearLayout，内部封装了许多滚动事件，
+            其必须是CoordinatorLayout的子布局-->
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:ignore="MissingClass" />
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/newsList"
-            android:name="com.example.mytopnews.newslist.BaseFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/content"
+                android:name="com.example.mytopnews.ContentFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navView"

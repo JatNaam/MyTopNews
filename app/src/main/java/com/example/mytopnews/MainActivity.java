@@ -1,136 +1,42 @@
 package com.example.mytopnews;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
+import android.view.MenuItem;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.example.mytopnews.newslist.BFragment;
-import com.example.mytopnews.newslist.EFragment;
-import com.example.mytopnews.newslist.HFragment;
-import com.example.mytopnews.newslist.ScFragment;
-import com.example.mytopnews.newslist.SpFragment;
-
 
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-    private BFragment bFragment;
-    private EFragment eFragment;
-    private HFragment hFragment;
-    private ScFragment scFragment;
-    private SpFragment spFragment;
-    int currentPage = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //隐藏自带的菜单栏
-//        ActionBar actionbar = getSupportActionBar();
-//        if (actionbar != null) {
-//            actionbar.hide();
-//        }
+        Toolbar toolbar = findViewById(R.id.Toolbar);
+        setSupportActionBar(toolbar);
         drawerLayout = findViewById(R.id.drawerLayout);
-        Button titleMenu = (Button) findViewById(R.id.titleMenuButton);
-        titleMenu.setOnClickListener(new View.OnClickListener() {
-            //点击菜单项显示个人信息
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "You clicked Menu button",
-                        Toast.LENGTH_SHORT).show();
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        bFragment=new BFragment();
-        fragmentTransaction.add(R.id.newsList,bFragment);
-        fragmentTransaction.commit();
+        ActionBar actionBar = getSupportActionBar();//获取ActionBar的实例，这个ActionBar的具体实现是由Toolbar完成的
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);//显示导航按钮
+            //实际上Toolbar最左侧的这个按钮叫做Home按钮，默认图标是一个返回箭头，含义是返回上一个Activity
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);//给导航按钮重新设置图标
+        }
     }
 
-    public void refresh(int flag) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (flag == currentPage) {
-            fragmentTransaction.commit();
-            return;
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        //处理Toolbar各个按钮的点击事件
+        if (item.getItemId() == android.R.id.home) {//Home按钮的id永远都是android.R.id.home
+            drawerLayout.openDrawer(GravityCompat.START);
         }
-        hideFragment();
-        currentPage = flag;
-        switch (flag) {
-            case 1:
-                if (bFragment != null) {
-                    fragmentTransaction.show(bFragment);
-                    break;
-                }
-                bFragment = new BFragment();
-                fragmentTransaction.add(R.id.newsList, bFragment);
-                break;
-            case 2:
-                if (eFragment != null) {
-                    fragmentTransaction.show(eFragment);
-                    break;
-                }
-                eFragment = new EFragment();
-                fragmentTransaction.add(R.id.newsList, eFragment);
-                break;
-            case 3:
-                if (hFragment != null) {
-                    fragmentTransaction.show(hFragment);
-                    break;
-                }
-                hFragment = new HFragment();
-                fragmentTransaction.add(R.id.newsList, hFragment);
-                break;
-            case 4:
-                if (scFragment != null) {
-                    fragmentTransaction.show(scFragment);
-                    break;
-                }
-                scFragment = new ScFragment();
-                fragmentTransaction.add(R.id.newsList, scFragment);
-                break;
-            case 5:
-                if (spFragment != null) {
-                    fragmentTransaction.show(spFragment);
-                    break;
-                }
-                spFragment = new SpFragment();
-                fragmentTransaction.add(R.id.newsList, spFragment);
-                break;
-            default:
-                break;
-        }
-        //提交事务
-        fragmentTransaction.commit();
+        return true;
     }
 
-    public void hideFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (bFragment != null) {
-            fragmentTransaction.hide(bFragment);
-        }
-        if (eFragment != null) {
-            fragmentTransaction.hide(eFragment);
-        }
-        if (hFragment != null) {
-            fragmentTransaction.hide(hFragment);
-        }
-        if (scFragment != null) {
-            fragmentTransaction.hide(scFragment);
-        }
-        if (spFragment != null) {
-            fragmentTransaction.hide(spFragment);
-        }
-        //提交事务
-        fragmentTransaction.commit();
-    }
 }

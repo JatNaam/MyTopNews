@@ -1,4 +1,4 @@
-package com.example.mytopnews;
+package com.example.mytopnews.newslist;
 
 public class News {
     private final int imageId;

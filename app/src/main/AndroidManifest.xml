@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.mytopnews.Web"
+            android:name="com.example.mytopnews.WebActivity"
             android:exported="true">
         </activity>
     </application>

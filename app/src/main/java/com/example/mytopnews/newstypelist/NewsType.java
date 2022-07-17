@@ -1,4 +1,4 @@
-package com.example.mytopnews.titilelayout;
+package com.example.mytopnews.newstypelist;
 
 public class NewsType {
     private String name;
