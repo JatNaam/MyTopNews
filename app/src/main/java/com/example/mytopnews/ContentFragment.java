@@ -60,39 +60,22 @@ public class ContentFragment extends Fragment {
         newsTypeList.add(sport);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void refresh(int flag) {
         if (this.flag == flag)
             return;
         else this.flag = flag;
-        /*更新Fragment的UI必须使用线程操作，不然会导致空指针异常*/
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                requireActivity().runOnUiThread(new Runnable() {
-                    //切换回主线程，处理UI变化
-                    @SuppressLint("NotifyDataSetChanged")
-                    @Override
-                    public void run() {
-                        if (flag == 0)
-                            initNewsB();
-                        else if (flag == 1)
-                            initNewsE();
-                        else if (flag == 2)
-                            initNewsH();
-                        else if (flag == 3)
-                            initNewsSC();
-                        else if (flag == 4)
-                            initNewsSP();
-                        newsAdapter.notifyDataSetChanged();//通知数据发生变化
-                    }
-                });
-            }
-        }).start();
+        if (flag == 0)
+            initNewsB();
+        else if (flag == 1)
+            initNewsE();
+        else if (flag == 2)
+            initNewsH();
+        else if (flag == 3)
+            initNewsSC();
+        else if (flag == 4)
+            initNewsSP();
+        newsAdapter.notifyDataSetChanged();//通知数据发生变化
     }
 
     private void initNewsB() {

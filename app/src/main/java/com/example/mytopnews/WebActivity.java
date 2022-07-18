@@ -24,7 +24,7 @@ public class WebActivity extends AppCompatActivity {
 //            actionbar.hide();
 //        }
 
-        WebView webView = (WebView) findViewById(R.id.webView);
+        WebView webView = findViewById(R.id.webView);
         
         //解决页面空白问题
         WebSettings webSettings = webView.getSettings();
