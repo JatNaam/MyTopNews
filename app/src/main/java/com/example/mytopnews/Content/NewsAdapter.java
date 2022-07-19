@@ -1,4 +1,4 @@
-package com.example.mytopnews.newslist;
+package com.example.mytopnews.Content;
 
 import android.content.Intent;
 import android.net.Uri;

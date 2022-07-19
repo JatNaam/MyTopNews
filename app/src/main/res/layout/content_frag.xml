@@ -4,11 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewForNewsType"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#17d9ff" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewForNewsList"

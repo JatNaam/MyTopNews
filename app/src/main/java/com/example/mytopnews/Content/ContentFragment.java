@@ -1,4 +1,4 @@
-package com.example.mytopnews;
+package com.example.mytopnews.Content;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -7,57 +7,69 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mytopnews.newslist.News;
-import com.example.mytopnews.newslist.NewsAdapter;
-import com.example.mytopnews.newstypelist.NewsType;
-import com.example.mytopnews.newstypelist.NewsTypeAdapter;
+import com.example.mytopnews.R;
+import com.example.mytopnews.Tab.NewsTypeViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContentFragment extends Fragment {
-    private final List<NewsType> newsTypeList = new ArrayList<>();
     private final List<News> newsList = new ArrayList<>();
-    private NewsTypeAdapter newsTypeAdapter;
     private NewsAdapter newsAdapter;
     private int flag = 0;
+
+    private NewsTypeViewModel newsTypeViewModel;
+    private static final String ARG_SECTION_NUMBER = "section_number";
+
+    /*为ViewPager2的适配器的方法提供创建Fragment的方法*/
+    public static ContentFragment newInstance(int index) {
+        ContentFragment fragment = new ContentFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(ARG_SECTION_NUMBER, index);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initNewsB();
+        newsTypeViewModel = new ViewModelProvider(this).get(NewsTypeViewModel.class);
+        int index = 0;
+        if (getArguments() != null) {
+            index = getArguments().getInt(ARG_SECTION_NUMBER);
+        }
+        newsTypeViewModel.setIndex(index);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.content_frag, container, false);
-        initNewsType();
-        RecyclerView newsTypeRecyclerView =view.findViewById(R.id.recyclerViewForNewsType);
-        LinearLayoutManager layoutManagerType = new LinearLayoutManager(getActivity());
-        layoutManagerType.setOrientation(LinearLayoutManager.HORIZONTAL); //将布局设为横向排列
-        newsTypeRecyclerView.setLayoutManager(layoutManagerType);
-        newsTypeAdapter =new NewsTypeAdapter(this,newsTypeList);
-        newsTypeRecyclerView.setAdapter(newsTypeAdapter);
 
-        initNewsB();
         RecyclerView newsListRecyclerView = view.findViewById(R.id.recyclerViewForNewsList);
         LinearLayoutManager layoutManagerNews = new LinearLayoutManager(getActivity());
         newsListRecyclerView.setLayoutManager(layoutManagerNews);
         newsAdapter = new NewsAdapter(newsList);
         newsListRecyclerView.setAdapter(newsAdapter);
 
-        return view;
-    }
+        /*对ViewPager的页码进行观察*/
+        newsTypeViewModel.getIndex().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer index) {
+                /*当观察的值发生变化时会回调到这里，
+                * （这里观察的值时ViewPage的页码）
+                * 所以在这里更新UI*/
+                refresh(index);
+            }
+        });
 
-    private void initNewsType() {
-        NewsType business = new NewsType("Business", R.drawable.tab_business);
-        newsTypeList.add(business);
-        NewsType entertainment = new NewsType("Entertainment", R.drawable.tab_entertainment);
-        newsTypeList.add(entertainment);
-        NewsType health = new NewsType("Health", R.drawable.tab_health);
-        newsTypeList.add(health);
-        NewsType science = new NewsType("Science", R.drawable.tab_science);
-        newsTypeList.add(science);
-        NewsType sport = new NewsType("Sport", R.drawable.tab_sport);
-        newsTypeList.add(sport);
+        return view;
     }
 
     @SuppressLint("NotifyDataSetChanged")
