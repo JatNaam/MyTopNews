@@ -22,11 +22,10 @@ public class ContentFragment extends Fragment {
     private final List<News> newsList = new ArrayList<>();
     private NewsAdapter newsAdapter;
     private int flag = 0;
-
     private NewsTypeViewModel newsTypeViewModel;
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    /*为ViewPager2的适配器的方法提供创建Fragment的方法*/
+    /*为ViewPager2的适配器的方法提供动态创建Fragment的方法*/
     public static ContentFragment newInstance(int index) {
         ContentFragment fragment = new ContentFragment();
         Bundle bundle = new Bundle();
@@ -128,6 +127,12 @@ public class ContentFragment extends Fragment {
                 "2022-04-11 17:44:23",
                 "http://www.cnsphoto.com/newDetail/single/12035932?pictureId=31147532");
         newsList.add(news6);
+        newsList.add(news1);
+        newsList.add(news2);
+        newsList.add(news3);
+        newsList.add(news4);
+        newsList.add(news5);
+        newsList.add(news6);
     }
 
     private void initNewsE() {
@@ -167,6 +172,12 @@ public class ContentFragment extends Fragment {
                 "cnsphoto.com",
                 "2022-04-05 21:21",
                 "http://www.cnsphoto.com/newDetail/single/12028706?pictureId=31083246");
+        newsList.add(news6);
+        newsList.add(news1);
+        newsList.add(news2);
+        newsList.add(news3);
+        newsList.add(news4);
+        newsList.add(news5);
         newsList.add(news6);
     }
 
@@ -208,6 +219,12 @@ public class ContentFragment extends Fragment {
                 "2022-04-11 14:59",
                 "http://www.cnsphoto.com/newDetail/single/12035932?pictureId=31147532");
         newsList.add(news6);
+        newsList.add(news1);
+        newsList.add(news2);
+        newsList.add(news3);
+        newsList.add(news4);
+        newsList.add(news5);
+        newsList.add(news6);
     }
 
     private void initNewsSC() {
@@ -248,7 +265,12 @@ public class ContentFragment extends Fragment {
                 "2022-04-11 18:51",
                 "http://www.cnsphoto.com/newDetail/single/12036060?pictureId=31148740");
         newsList.add(news6);
-
+        newsList.add(news1);
+        newsList.add(news2);
+        newsList.add(news3);
+        newsList.add(news4);
+        newsList.add(news5);
+        newsList.add(news6);
     }
 
     private void initNewsSP() {
@@ -288,6 +310,12 @@ public class ContentFragment extends Fragment {
                 "cnsphoto.com",
                 "2022-04-08 17:51",
                 "http://www.cnsphoto.com/newDetail/single/12031950?pictureId=31109186");
+        newsList.add(news6);
+        newsList.add(news1);
+        newsList.add(news2);
+        newsList.add(news3);
+        newsList.add(news4);
+        newsList.add(news5);
         newsList.add(news6);
     }
 }
