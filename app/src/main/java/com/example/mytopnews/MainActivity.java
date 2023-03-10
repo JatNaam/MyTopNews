@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         /*将UI与系统状态栏融合*/
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
+//        View decorView = getWindow().getDecorView();
+//        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//        getWindow().setStatusBarColor(Color.TRANSPARENT);
 
         Toolbar toolbar = findViewById(R.id.Toolbar);
         setSupportActionBar(toolbar);
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();//获取ActionBar的实例，这个ActionBar的具体实现是由Toolbar完成的
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);//显示导航按钮
-            //实际上Toolbar最左侧的这个按钮叫做Home按钮，默认图标是一个返回箭头，含义是返回上一个Activity
+            //实际上Toolbar最左侧的这个按钮叫做 Home按钮，默认图标是一个返回箭头，含义是返回上一个Activity
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);//给导航按钮重新设置图标
         }
 
