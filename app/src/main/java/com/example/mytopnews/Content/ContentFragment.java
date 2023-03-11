@@ -21,7 +21,7 @@ import java.util.List;
 public class ContentFragment extends Fragment {
     private final List<News> newsList = new ArrayList<>();
     private NewsAdapter newsAdapter;
-    private int flag = 0;
+    private int currentPage = 0;
     private NewsTypeViewModel newsTypeViewModel;
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -38,11 +38,14 @@ public class ContentFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initNewsB();
+        // 创建ViewModel对象
         newsTypeViewModel = new ViewModelProvider(this).get(NewsTypeViewModel.class);
         int index = 0;
         if (getArguments() != null) {
+            // 获取fragment的页码
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
+        // 把页码传给ViewModel中的LiveData
         newsTypeViewModel.setIndex(index);
     }
 
@@ -50,43 +53,41 @@ public class ContentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.content_frag, container, false);
-
         RecyclerView newsListRecyclerView = view.findViewById(R.id.recyclerViewForNewsList);
         LinearLayoutManager layoutManagerNews = new LinearLayoutManager(getActivity());
         newsListRecyclerView.setLayoutManager(layoutManagerNews);
         newsAdapter = new NewsAdapter(newsList);
         newsListRecyclerView.setAdapter(newsAdapter);
-
         /*对ViewPager的页码进行观察*/
         newsTypeViewModel.getIndex().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer index) {
                 /*当观察的值发生变化时会回调到这里，
-                * （这里观察的值时ViewPage的页码）
+                * （这里观察的值时ViewPager的页码）
                 * 所以在这里更新UI*/
                 refresh(index);
             }
         });
-
         return view;
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void refresh(int flag) {
-        if (this.flag == flag)
+    public void refresh(int page) {
+        if (this.currentPage == page)
             return;
-        else this.flag = flag;
-        if (flag == 0)
+        else this.currentPage = page;
+        if (page == 0)
             initNewsB();
-        else if (flag == 1)
+        else if (page == 1)
             initNewsE();
-        else if (flag == 2)
+        else if (page == 2)
             initNewsH();
-        else if (flag == 3)
+        else if (page == 3)
             initNewsSC();
-        else if (flag == 4)
+        else if (page == 4)
             initNewsSP();
-        newsAdapter.notifyDataSetChanged();//通知数据发生变化
+        //通知recycleList的Adapter数据发生变化，让它重新渲染
+        newsAdapter.notifyDataSetChanged();
     }
 
     private void initNewsB() {

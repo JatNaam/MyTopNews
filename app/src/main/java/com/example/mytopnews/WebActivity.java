@@ -23,21 +23,30 @@ public class WebActivity extends AppCompatActivity {
 //        if (actionbar != null) {
 //            actionbar.hide();
 //        }
-
         WebView webView = findViewById(R.id.webView);
-        
-        //解决页面空白问题
+        /* 解决页面空白问题 */
         WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);//是否允许JavaScript脚本运行，默认为false。设置true时，会提醒可能造成XSS漏洞
-        webSettings.setDomStorageEnabled(true);//开启本地DOM存储
-        webSettings.setAppCacheEnabled(false);//可以通过setAppCacheEnabled方法来控制webView是否有缓存：
+        //是否允许JavaScript脚本运行，默认为false。设置true时，会提醒可能造成XSS漏洞
+        webSettings.setJavaScriptEnabled(true);
+        //开启本地DOM存储
+        webSettings.setDomStorageEnabled(true);
+        //可以通过setAppCacheEnabled方法来控制webView是否有缓存：
+        webSettings.setAppCacheEnabled(false);
+        /*其它功能*/
+        //是否可以缩放，默认true
+        webSettings.setSupportZoom(true);
+        //是否显示缩放按钮，默认false
+        webSettings.setBuiltInZoomControls(true);
+        //设置此属性，可任意比例缩放。大视图模式
+        webSettings.setUseWideViewPort(true);
+        //和setUseWideViewPort(true)一起解决网页自适应问题
+        webSettings.setLoadWithOverviewMode(true);
 
-        webSettings.setSupportZoom(true);//是否可以缩放，默认true
-        webSettings.setBuiltInZoomControls(true);//是否显示缩放按钮，默认false
-        webSettings.setUseWideViewPort(true);//设置此属性，可任意比例缩放。大视图模式
-        webSettings.setLoadWithOverviewMode(true);//和setUseWideViewPort(true)一起解决网页自适应问题
-
-        webView.setWebViewClient(new WebViewClient() {//使一切操作如登录操作，都在WebView中进行，不打开浏览器
+        // 对网站的HTTP和HTTPS协议的处理
+        webView.setWebViewClient(new WebViewClient() {
+            /**
+             * 使一切操作如登录操作，都在WebView中进行，不打开浏览器
+             */
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.startsWith("http://") || url.startsWith("https://")) {
@@ -54,7 +63,7 @@ public class WebActivity extends AppCompatActivity {
                 }
             }
         });
-
+        // 从Intent中获取要访问的新闻网站URL
         Intent intent = getIntent();
         String data = intent.getStringExtra("extra_data");
         if (data != null)

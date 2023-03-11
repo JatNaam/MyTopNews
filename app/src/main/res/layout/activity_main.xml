@@ -23,19 +23,22 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="#17d9ff"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:layout_scrollFlags="scroll"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
             <!--android:theme设置toolbar主题
                 app:popupTheme设置toolbar中的菜单项的主题
-                app命名空间：为了兼容低版本的系统
-                layout_scrollFlags：scroll表示当RecycleView向上滑动时，Toolbar会跟着一起向上滚动并实现隐藏
-                                    enterAlways表示当向下滚动时Toolbar会跟着向下滚动并重新显示
-                                    snap表示当Toolbar还没完全隐藏或显示时会根据当前滚动距离自动选择隐藏或显示-->
+                app命名空间：为了兼容低版本的系统 -->
+            <!--layout_scrollFlags：
+                scroll表示当RecycleView向上滑动时，Toolbar会跟着一起向上滚动并实现隐藏
+                enterAlways表示当向下滚动时Toolbar会跟着向下滚动并重新显示
+                snap表示当Toolbar还没完全隐藏或显示时会根据当前滚动距离自动选择隐藏或显示-->
+
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
-                app:tabMode="scrollable"
-                android:background="#17d9ff"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="#17d9ff"
+                app:tabMode="scrollable" />
 
         </com.google.android.material.appbar.AppBarLayout>
         <!--AppBarLayout实际上是一个垂直方向的LinearLayout，内部封装了许多滚动事件，
@@ -56,7 +59,7 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu" />
+    <!-- headerLayout是用来在NavigationView显示头部布局，
+    而menu则用来显示NavigationView的具体菜单项列表-->
 
 </androidx.drawerlayout.widget.DrawerLayout>
-
-

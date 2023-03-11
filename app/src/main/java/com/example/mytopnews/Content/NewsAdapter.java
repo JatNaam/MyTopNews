@@ -43,19 +43,22 @@ public  class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // 用于创建一个ViewHolder实例，将news_item布局加载进来。
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item, parent, false);
-
         final ViewHolder holder = new ViewHolder(view);
+        // 给recycleView的item绑定点击事件
         holder.newsView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
                 News news = mNewsList.get(position);
                 Intent intent;
+                // 奇数item使用WebView打开，偶数item使用手机浏览器打开
                 if (position % 2 == 0) {
-                    intent = new Intent(Intent.ACTION_VIEW);//隐式intent，使用Android自带浏览器打开
+                    //隐式intent，使用手机浏览器打开
+                    intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(news.getURL()));
                 } else {
-                    intent = new Intent(v.getContext(), WebActivity.class);//显式intent，使用内置浏览器WebView打开
+                    //显式intent，使用WebView控件打开
+                    intent = new Intent(v.getContext(), WebActivity.class);
                     String data = news.getURL();
                     intent.putExtra("extra_data", data);
                 }
@@ -67,8 +70,8 @@ public  class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        //用于对RecyclerView子项的数据进行赋值，会在每个子项滚动到屏幕内的时候执行，
-        //这里我们通过position参数得到当前项的News实例，然后再将数据设置到ViewHolder的控件中
+        // 用于对RecyclerView子项的数据进行赋值，会在每个子项滚动到屏幕内的时候执行，
+        // 这里我们通过position参数得到当前项的News实例，然后再将数据设置到ViewHolder的控件中
         News news = mNewsList.get(position);
         holder.newsImage.setImageResource(news.getImageId());
         holder.newsTitle.setText(news.getNewsTitle());

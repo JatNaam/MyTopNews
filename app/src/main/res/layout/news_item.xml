@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="102dp"
@@ -9,19 +10,26 @@
         android:layout_width="match_parent"
         android:layout_height="100dp">
 
-        <ImageView
-            android:id="@+id/newsImage"
-            android:layout_width="120dp"
-            android:layout_height="90dp"
-            android:scaleType="centerCrop"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingLeft="5dp"
-            />
+            app:cardCornerRadius="5dp">
+
+            <ImageView
+                android:id="@+id/newsImage"
+                android:layout_width="120dp"
+                android:layout_height="90dp"
+                android:scaleType="centerCrop"
+                android:paddingLeft="5dp"/>
+        </com.google.android.material.card.MaterialCardView>
+        <!-- MaterialCardView也是一个加强FrameLayout，额外提供了圆角和阴影等效果 -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/newsTitle"
                 android:layout_width="match_parent"
@@ -42,10 +50,10 @@
                     android:id="@+id/newsURL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
                     android:padding="5dp"
-                    android:textSize="8sp"/>
+                    android:textSize="8sp" />
 
                 <TextView
                     android:id="@+id/newsTime"
@@ -53,8 +61,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:textSize="8sp"
-                    android:padding="5dp"/>
+                    android:padding="5dp"
+                    android:textSize="8sp" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -65,5 +73,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#A3A0A0" />
+    <!--  分界线  -->
 
 </LinearLayout>
